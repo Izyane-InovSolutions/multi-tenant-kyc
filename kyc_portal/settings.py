@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -38,6 +39,9 @@ SHARED_APPS = (
     'django.contrib.admin',
     'rest_framework',
     'drf_spectacular',
+    'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
+
 )
 
 TENANT_APPS = (
@@ -153,15 +157,19 @@ MAILERS = {
     },
 }
 
-
+AUTHENTICATION_BACKENDS = [
+    'customers.Utils.Auth.EmailBackend.EmailBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
     ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
+    "EXCEPTION_HANDLER": "customers.Utils.Exceptions.Exceptions.AuthExceptionHandler",
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'customers.Utils.Auth.CookieJWTAuthentication.CookieJWTAuthentication',
+    ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 20,
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
@@ -172,4 +180,22 @@ SPECTACULAR_SETTINGS = {
     'DESCRIPTION': 'Multi-tenant KYC platform API',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
+    'COMPONENT_SPLIT_REQUEST': True,
 }
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_COOKIE': 'access_token',
+    'AUTH_COOKIE_REFRESH': 'refresh_token',
+    'AUTH_COOKIE_SECURE': not DEBUG,      
+    'AUTH_COOKIE_SAMESITE': 'Lax',
+}
+
