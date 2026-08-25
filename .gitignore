@@ -1,0 +1,83 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# --- Virtual environments ---
+venv/
+env/
+ENV/
+.venv/
+
+# --- Django ---
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+static_root/
+
+# Django secret key / env vars (keep secrets out of git)
+.env
+.env.*
+!.env.example
+
+# --- Migrations note ---
+# Migrations ARE tracked by default (this is correct for django-tenants and normal Django).
+# Do NOT ignore customers/migrations/ or any app's migrations/ folder.
+
+# --- PostgreSQL ---
+*.sql
+*.dump
+*.backup
+
+# --- Celery / Redis (if you wire these in later, same pattern as your other projects) ---
+celerybeat-schedule
+celerybeat.pid
+
+# --- Testing / coverage ---
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# --- mypy / linters ---
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.ruff_cache/
+
+# --- VS Code ---
+.vscode/
+*.code-workspace
+
+# --- PyCharm / JetBrains ---
+.idea/
+
+# --- OS junk ---
+.DS_Store
+Thumbs.db
+
+# --- Distribution / packaging ---
+build/
+dist/
+*.egg-info/
+*.egg
+
+# --- Jupyter ---
+.ipynb_checkpoints
+
+# --- Sensitive certs / keys (relevant given your VPN/SSL work on other projects) ---
+*.pem
+*.key
+*.crt
+*.p12
