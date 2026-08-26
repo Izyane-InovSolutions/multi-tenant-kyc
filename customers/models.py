@@ -1,7 +1,9 @@
-import re
-import random
-from django.db import models
 from django_tenants.models import TenantMixin, DomainMixin
+from django.db import models
+import random
+import re
+
+
 
 
 def generate_unique_schema_name(company_name):
@@ -63,3 +65,17 @@ class Client(TenantMixin):
 
 class Domain(DomainMixin):
     pass
+
+
+class SystemConfigs(models.Model):
+    smtp_host = models.CharField(max_length=255, blank=True)
+    smtp_port = models.PositiveIntegerField(default=587)
+    smtp_username = models.CharField(max_length=255, blank=True)
+    smtp_password = models.CharField(max_length=255, blank=True)
+    smtp_from_email = models.EmailField(blank=True)
+    smtp_use_tls = models.BooleanField(default=True)
+    sms_base_url = models.CharField(max_length=255, blank=True)
+    sms_source = models.CharField(max_length=50, blank=True)
+    sms_senderid = models.CharField(max_length=50, blank=True)
+    sms_username = models.CharField(max_length=50, blank=True)
+    sms_password = models.CharField(max_length=100, blank=True)
