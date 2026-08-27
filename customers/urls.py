@@ -1,6 +1,5 @@
-from customers.Views.Auth.AuthView import LoginView, LogoutView, RefreshView
-
 from .Views.Client.ClientViews import TenantListView, TenantDetailView, TenantSignUpView
+from customers.Views.Auth.AuthView import LoginView, LogoutView, RefreshView
 from django.urls import path
 
 
