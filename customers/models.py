@@ -43,7 +43,10 @@ class Client(TenantMixin):
     address = models.TextField(blank=True, help_text="Registered / physical address")
     billing_address = models.TextField(blank=True)
     shipping_address = models.TextField(blank=True)
-
+    phone_no = models.CharField(blank=True, null=True)
+    contact_person_email = models.EmailField(blank=True, help_text="Primary contact person's email")
+    contact_person_phone = models.CharField(max_length=20, blank=True, help_text="Primary contact person's phone number")
+    contact_person_position = models.CharField(max_length=100, blank=True, help_text="Primary contact person's job title/role")
     logo = models.ImageField(upload_to='client_logos/', blank=True, null=True)
     primary_color = models.CharField(
         max_length=7, blank=True, default='#000000',
